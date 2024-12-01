@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using Xunit;
 
 namespace LeetCode_Problems.Array
 {
@@ -22,14 +17,22 @@ namespace LeetCode_Problems.Array
 
         public int[] RunningSum(int[] nums)
         {
-            return nums;
+            int[] sums = new int[nums.Length];
+            sums[0] = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                sums[i] = nums[i] + sums[i - 1];
+            }
+
+            return sums;
         }
 
-        [Fact]
-        public void Test()
+        [Theory]
+        [InlineData(new[] { 1, 2, 3, 4 }, new[] { 1, 3, 6, 10 })]
+        [InlineData(new[] { 1, 1, 1, 1, 1 }, new[] { 1, 2, 3, 4, 5 })]
+        public void Test(int[] nums, int[] expected)
         {
-            var nums = new[] { 1, 2, 3, 4 };
-            var expected = new[] { 1, 2, 3, 4 };
             Assert.Equal(expected, RunningSum(nums));
         }
     }
